@@ -1,4 +1,4 @@
-use crate::encoding::Encoding;
+use crate::encoding::{Encoding, LanguageSymbolProbability};
 
 pub fn minimal_entropy<S>(symbols_probabilities: &[(S, f32)]) -> f32 {
 
@@ -7,6 +7,6 @@ pub fn minimal_entropy<S>(symbols_probabilities: &[(S, f32)]) -> f32 {
     return 0.0 - sum;
 }
 
-pub fn code_entropy(symbols_probabilities: &[(char, f32)], encoding: &Encoding) -> f32 {
+pub fn code_entropy(symbols_probabilities: &LanguageSymbolProbability, encoding: &Encoding) -> f32 {
     return symbols_probabilities.iter().map(|(s, p)| *p * encoding.get(&s).unwrap().len() as f32).sum();
 }

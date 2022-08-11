@@ -2,7 +2,7 @@ use std::{
     cmp::Reverse,
     collections::{BinaryHeap, HashMap}
 };
-use crate::encoding::Encoding;
+use crate::encoding::{Encoding, LanguageSymbolProbability};
 
 #[derive(Debug)]
 struct HuffmanNode{
@@ -58,7 +58,7 @@ fn huffman_tree_to_map(root: &HuffmanNode, current_prefix: Vec<bool>) -> Encodin
     return map;
 }
 
-pub fn get_huffman_code(symbol_probabilities: &[(char, f32)]) -> Encoding {
+pub fn get_huffman_code(symbol_probabilities: &LanguageSymbolProbability) -> Encoding {
     // convert slice to heap
     let mut huffman_nodes: BinaryHeap<Reverse<HuffmanNode>> =
         BinaryHeap::from_iter(symbol_probabilities.iter().map(|(c, p)| {
