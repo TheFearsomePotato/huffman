@@ -32,7 +32,7 @@ impl Ord for HuffmanNode {
     }
 }
 
-fn huffman_tree_to_map(root: &HuffmanNode, current_prefix: Vec<bool>) -> Encoding{
+fn huffman_tree_to_map(root: &HuffmanNode, current_prefix: String) -> Encoding{
     if root.child0 == None && root.child1 == None {
         let mut code_map = HashMap::new();
         code_map.insert(root.symbol.unwrap(), current_prefix);
@@ -43,14 +43,14 @@ fn huffman_tree_to_map(root: &HuffmanNode, current_prefix: Vec<bool>) -> Encodin
     
     if let Some(child) = &root.child0 {
         let mut child_prefix = current_prefix.clone();
-        child_prefix.push(false);
+        child_prefix.push('0');
         let child_map = huffman_tree_to_map(&child, child_prefix);
         map.extend(child_map);
     }
 
     if let Some(child) = &root.child1 {
         let mut child_prefix = current_prefix;
-        child_prefix.push(true);
+        child_prefix.push('1');
         let child_map = huffman_tree_to_map(&child, child_prefix);
         map.extend(child_map);
     }
@@ -86,5 +86,5 @@ pub fn get_huffman_code(symbol_probabilities: &LanguageSymbolProbability) -> Enc
 
     let root_node = huffman_nodes.pop().unwrap().0;
 
-    return huffman_tree_to_map(&root_node, vec![]);
+    return huffman_tree_to_map(&root_node, String::new());
 }
